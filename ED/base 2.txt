@@ -1,0 +1,139 @@
+	int esc; //variavel de escolha do menu
+	
+	//LPedido P;  //variavel para a lista de pedidos
+	
+	/*
+	do{
+		printf("\n ------------MENU------------");
+		printf("\n 1 - Inserir o produto no carrinho");
+		printf("\n 2 - Apresentar os produtos do carrinho");
+		printf("\n 3 - Excluir algum produto do carrinho");
+		printf("\n 0 - Sair do menu");
+		printf("\n ----------------------------");
+		printf("\n Escolha uma opcao: ");
+
+		scanf("%d", &esc);
+		switch(esc){
+			case 1: inserirProduto(&P);	break;
+			case 2: apresentarCarrinho(&P); break;
+			case 3: excluirProduto(&P); 	break;
+		}		
+	}
+		while(esc !=0);
+	*/	
+}
+
+=========================================================================================================
+#include "tiposProduto.h"
+#include "tiposCliente.h"
+#include "tiposPedido.h"
+
+int main()
+{
+	int opcao;
+	
+	TListaProduto ListaProduto;
+	TListaCliente ListaCliente;
+	TListaPedidos ListaPedidos;
+	
+	
+	inicializarListaProdutos(&ListaProduto);
+	inicializarListaCliente(&ListaCliente);
+	inicializarListaPedidos(&ListaPedidos);
+	
+	do
+	{
+		printf("\n 1 - Inserir Produto");
+		printf("\n 2 - Conceder desconto");
+		printf("\n 3 - Apresentar todos os produtos");
+		printf("\n 4 - Consultar produto");
+		printf("\n 5 - Excluir produto");
+		printf("\n 6 - Inserir Cliente");
+		printf("\n 7 - Apresentar todos os Clientes");
+		//printf("\n 8 - Consultar Cliente");
+		//printf("\n 9 - Excluir Cliente");
+		printf("\n10 - Realizar pedido");
+		printf("\n11 - Apresentar pedidos");
+		printf("\n 0 - Sair");
+		printf("\n Escolha uma opcao: ");
+		scanf("%d", &opcao);
+		switch(opcao)
+		{
+			case 1: inserirProduto(&ListaProduto); break;
+			case 2: concederDesconto(&ListaProduto); break;
+			case 3: apresentarProdutos(&ListaProduto); break;
+			case 4: consultarProduto(&ListaProduto); break;
+			case 5: excluirProduto(&ListaProduto); break;
+			case 6: inserirCliente(&ListaCliente); break;
+			case 7: apresentarCliente(&ListaCliente); break;
+			//case 8: consultarCliente(&ListaCliente); break;
+			//case 9: excluirCliente(&ListaCliente); break;
+			case 10: realizarPedido(&ListaPedidos, &ListaProduto, &ListaCliente); break;
+			case 11: apresentarPedidos(&ListaPedidos);
+		}
+	}while(opcao != 0);
+}
+=========================================================================================================
+#ifndef _tiposProduto_
+#define _tiposProduto_
+
+#include <stdio.h>
+#include <conio.h>
+
+typedef struct tipoProduto
+{
+	int codProduto;
+	char nomeProduto[20];
+	float valorProduto;
+	int qtdeProduto;
+}TProduto;
+
+typedef struct tipoLista
+{
+	TProduto dadosProduto[10];
+	int tamanhoListaProduto;
+}TListaProduto;
+
+void inicializarListaProdutos(TListaProduto *p);
+void inserirProduto(TListaProduto *p);
+void apresentarProdutos(TListaProduto *p);
+void concederDesconto(TListaProduto *p);
+int validarProduto(TListaProduto *p, int codProduto);
+void consultarProduto (TListaProduto *p);
+void excluirProduto (TListaProduto *p);
+
+#endif
+=========================================================================================================
+
+#ifndef _tiposPedido_
+#define _tiposPedido_
+
+#include "tiposCliente.h"
+#include "tiposProduto.h"
+
+typedef struct tipoPedido
+{
+	int codigoPedido;
+	TCliente cliente;
+	TListaProduto itensPedido;
+	float totalPedido;
+}TPedido;
+
+typedef struct tipoListaPedido
+{
+	TPedido listaDePedidos[100];
+	int tamanhoListaDePedidos;
+}TListaPedidos;
+
+void realizarPedido(TListaPedidos *pPed, TListaProduto *pProd, TListaCliente *pCli);
+void inicializarListaPedidos(TListaPedidos *p);
+void apresentarPedidos(TListaPedidos *p);
+void calcularTotalPedido (TListaPedidos *p);
+void atualizarEstoque (TListaPedidos *pPed, TListaProduto *pProd);
+
+#endif
+==========================================================================================================
+
+
+
+
